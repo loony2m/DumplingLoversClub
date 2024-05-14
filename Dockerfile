@@ -2,7 +2,7 @@ FROM maven:latest AS build
 
 COPY . .
 
-RUN mvn clean package
+RUN mvn clean install
 
 FROM openjdk:17.0.1-jdk-slim
 
