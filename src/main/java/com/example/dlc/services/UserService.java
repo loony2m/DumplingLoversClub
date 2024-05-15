@@ -28,7 +28,7 @@ public class UserService {
         user.setActive(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.getRoles().add(Role.ROLE_USER);
-        log.info("Saving new User with username: {}", username);
+        log.info("Сохранение нового пользователя с именем: {}", username);
         userRepository.save(user);
         return true;
     }
@@ -41,7 +41,7 @@ public class UserService {
         User user = userRepository.findById(id).orElse(null);
         if (user != null) {
             userRepository.delete(user);
-            log.info("Deleted user with id = {}; username: {}", user.getId(), user.getUsername());
+            log.info("Удален пользователь с id = {}; именем: {}", user.getId(), user.getUsername());
         }
     }
 
