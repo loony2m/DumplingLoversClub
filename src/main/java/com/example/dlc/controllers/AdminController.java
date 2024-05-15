@@ -146,18 +146,4 @@ public class AdminController {
         brandService.deleteBrand(id);
         return "redirect:/admin"; // Перенаправление на страницу администратора после удаления
     }
-
-    @GetMapping("/admin/manufacturers")
-    public String getAllManufacturers(Model model) {
-        List<Manufacturer> manufacturers = manufacturerService.getAllManufacturers();
-        model.addAttribute("manufacturers", manufacturers);
-        return "manufacturer-list"; // Возврат шаблона для отображения списка производителей
-    }
-
-    @GetMapping("/admin/brands")
-    public String getAllBrands(Model model) {
-        List<Brand> brands = brandService.getAllBrands();
-        model.addAttribute("brands", brands);
-        return "brand-list"; // Возврат шаблона для отображения списка брендов
-    }
 }
