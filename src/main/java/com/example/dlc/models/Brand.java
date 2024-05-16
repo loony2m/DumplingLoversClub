@@ -22,7 +22,7 @@ public class Brand {
 
     @Setter
     @Getter
-    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products;
 }
 
