@@ -26,9 +26,9 @@ public class BrandService {
     }
 
     @Transactional
-    public void deleteBrand(Long manufacturerId) {
-        Brand brand = brandRepository.findById(manufacturerId)
-                .orElseThrow(() -> new EntityNotFoundException("Manufacturer not found with id: " + manufacturerId));
+    public void deleteBrand(Long brandId) {
+        Brand brand = brandRepository.findById(brandId)
+                .orElseThrow(() -> new EntityNotFoundException("Марка не найдена с id: " + brandId));
 
         // Удаление всех товаров, связанных с производителем
         brand.getProducts().forEach(product -> product.setBrand(null));
