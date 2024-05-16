@@ -10,25 +10,19 @@ import javax.persistence.Id;
 @Entity
 public class Brand {
     @Setter
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Setter
+    @Getter
     private String name;
     @Setter
+    @Getter
     private double averageRating;
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public double getAverageRating() {
-        return averageRating;
-    }
+    @Setter
+    @Getter
+    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
+    private List<Product> products;
 }
-
-
