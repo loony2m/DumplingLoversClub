@@ -15,6 +15,7 @@ public class Manufacturer {
     private Long id;
     @Setter
     private String name;
+    @Setter
     private double averageRating;
 
     public Long getId() {
