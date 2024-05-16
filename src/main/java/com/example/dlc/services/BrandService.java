@@ -25,12 +25,16 @@ public class BrandService {
         return brandRepository.findAll();
     }
 
-    public void deleteBrand(Long id) {
-        // Проверка существования бренда по ID перед удалением
-        if (brandRepository.existsById(id)) {
-            brandRepository.deleteById(id);
-        } else {
-            throw new EntityNotFoundException("Brand with id " + id + " not found");
-        }
+    @Transactional
+    public void deleteBrand(Long manufacturerId) {
+        Brand brand = brandRepository.findById(manufacturerId)
+                .orElseThrow(() -> new EntityNotFoundException("Manufacturer not found with id: " + manufacturerId));
+
+        // Удаление всех товаров, связанных с производителем
+        brand.getProducts().forEach(product -> product.setBrand(null));
+        brand.getProducts().clear();
+
+        // Удаление производителя
+        brandRepository.delete(brand);
     }
 }
