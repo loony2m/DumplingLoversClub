@@ -1,5 +1,7 @@
 package com.example.dlc.repositories;
 
+import com.example.dlc.models.Brand;
+import com.example.dlc.models.Manufacturer;
 import com.example.dlc.models.Product;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
