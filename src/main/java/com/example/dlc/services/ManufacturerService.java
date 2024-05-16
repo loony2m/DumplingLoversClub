@@ -5,7 +5,9 @@ import com.example.dlc.repositories.ManufacturerRepository;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ManufacturerService {
@@ -20,16 +22,19 @@ public class ManufacturerService {
     }
 
     public Manufacturer addManufacturer(Manufacturer manufacturer) {
-        // Дополнительные проверки, например, на уникальность названия производителя
         return manufacturerRepository.save(manufacturer);
     }
 
-    public void deleteManufacturer(Long id) {
-        // Проверка существования производителя по ID перед удалением
-        if (manufacturerRepository.existsById(id)) {
-            manufacturerRepository.deleteById(id);
-        } else {
-            throw new EntityNotFoundException("Manufacturer with id " + id + " not found");
-        }
+    @Transactional
+    public void deleteManufacturer(Long manufacturerId) {
+        Manufacturer manufacturer = manufacturerRepository.findById(manufacturerId)
+                .orElseThrow(() -> new EntityNotFoundException("Manufacturer not found with id: " + manufacturerId));
+
+        // Удаление всех товаров, связанных с производителем
+        manufacturer.getProducts().forEach(product -> product.setManufacturer(null));
+        manufacturer.getProducts().clear();
+
+        // Удаление производителя
+        manufacturerRepository.delete(manufacturer);
     }
 }
