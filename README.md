@@ -21,6 +21,7 @@ mvn spring-boot:run
 ### Railway
 
 Сервис для запуска приложения: [Railway](https://railway.app/)
+Ссылка: https://dumplingloversclub-production.up.railway.app/
 
 Создайте новый пустой проект в Railway и начните с создания базы данных MySQL. Затем вы можете создать новый проект с GitHub. Вы можете использовать следующие переменные среды на основе только что созданной базы данных.
 
