@@ -39,8 +39,8 @@
     <hr>
     <p><h1 style="text-align: center">${product.title} | ${product.price} ₽</h1></p>
     <p style="text-align: center">${product.description}</p>
-    <p style="text-align: center">Марка: ${product.brand.name}</p>
-    <p style="text-align: center">Производитель: ${product.manufacturer.name}</p>
+    <p style="text-align: center">Марка: ${product.brand != null ? product.brand.name : 'не выбрано'}</p>
+    <p style="text-align: center">Производитель: ${product.manufacturer != null ? product.manufacturer.name : 'не выбрано'}</p>
     <hr>
 
     <#if user.isAdmin()>
