@@ -100,6 +100,12 @@ public class ProductService {
         // Получаем пользователя по его имени
         User user = userRepository.findByUsername(username);
 
+        // Получаем бренд продукта
+        Brand brand = product.getBrand();
+
+        // Получаем производителя продукта
+        Manufacturer manufacturer = product.getManufacturer();
+
         // Проверяем, существует ли уже отзыв для данного продукта от данного пользователя
         Review existingReview = product.getReviews().stream()
                 .filter(r -> r.getUser().equals(user))
@@ -119,20 +125,57 @@ public class ProductService {
             newReview.setProduct(product);
             product.addReview(newReview);
 
-            /*// Сохраняем фотографию вместе с отзывом
-            if (photo != null && !photo.isEmpty()) {
-                try {
-                    Image image = toImageEntity(photo);
-                    newReview.setPhoto(image);
-                } catch (IOException e) {
-                    // Обработка ошибки при сохранении фотографии
-                    e.printStackTrace();
-                }
-            }*/
+        /*// Сохраняем фотографию вместе с отзывом
+        if (photo != null && !photo.isEmpty()) {
+            try {
+                Image image = toImageEntity(photo);
+                newReview.setPhoto(image);
+            } catch (IOException e) {
+                // Обработка ошибки при сохранении фотографии
+                e.printStackTrace();
+            }
+        }*/
         }
+
+        // Обновляем средний рейтинг бренда
+        updateBrandAverageRating(brand);
+
+        // Обновляем средний рейтинг производителя
+        updateManufacturerAverageRating(manufacturer);
 
         // Сохраняем обновленный продукт
         productRepository.save(product);
+    }
+
+
+    private void updateManufacturerAverageRating(Manufacturer manufacturer) {
+        List<Product> products = productRepository.findAllByManufacturer(manufacturer);
+        double totalRating = 0;
+        int numReviews = 0;
+        for (Product product : products) {
+            for (Review review : product.getReviews()) {
+                totalRating += review.getRating();
+                numReviews++;
+            }
+        }
+        double averageRating = numReviews > 0 ? totalRating / numReviews : 0;
+        manufacturer.setAverageRating(averageRating);
+        manufacturerRepository.save(manufacturer);
+    }
+
+    private void updateBrandAverageRating(Brand brand) {
+        List<Product> products = productRepository.findAllByBrand(brand);
+        double totalRating = 0;
+        int numReviews = 0;
+        for (Product product : products) {
+            for (Review review : product.getReviews()) {
+                totalRating += review.getRating();
+                numReviews++;
+            }
+        }
+        double averageRating = numReviews > 0 ? totalRating / numReviews : 0;
+        brand.setAverageRating(averageRating);
+        brandRepository.save(brand);
     }
 
     public List<Review> getProductReviews(Long productId) {
