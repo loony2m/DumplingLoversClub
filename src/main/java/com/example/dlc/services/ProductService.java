@@ -44,7 +44,7 @@ public class ProductService {
             image3 = toImageEntity(file3);
             product.addImageToProduct(image3);
         }
-        log.info("Сохранение нового продукта. Title: {}; Имя пользователя: {}", product.getTitle(), product.getUser().getUsername());
+        log.info("Saving new Product. Title: {}; Author email: {}", product.getTitle(), product.getUser().getUsername());
         Product productFromDb = productRepository.save(product);
         productFromDb.setPreviewImageId(productFromDb.getImages().get(0).getId());
         productRepository.save(product);
@@ -71,12 +71,12 @@ public class ProductService {
         if (product != null) {
             if (product.getUser().getId().equals(user.getId())) {
                 productRepository.delete(product);
-                log.info("Продукт с id = {} был удалён", id);
+                log.info("Product with id = {} was deleted", id);
             } else {
-                log.error("Пользователь: {} не имеет этого продукта с id = {}", user.getUsername(), id);
+                log.error("User: {} haven't this product with id = {}", user.getUsername(), id);
             }
         } else {
-            log.error("Продукт с id = {} не найден", id);
+            log.error("Product with id = {} is not found", id);
         }    }
 
     public Product getProductById(Long id) {
@@ -178,6 +178,7 @@ public class ProductService {
         brandRepository.save(brand);
     }
 
+
     public List<Review> getProductReviews(Long productId) {
         Product product = getProductById(productId);
         return product != null ? product.getReviews() : new ArrayList<>();
@@ -192,9 +193,9 @@ public class ProductService {
             review.getProduct().getReviews().remove(review);
             // Удаляем отзыв из базы данных
             reviewRepository.deleteById(reviewId);
-            log.info("Отзыв с id = {} был удалён", reviewId);
+            log.info("Review with id = {} was deleted", reviewId);
         } else {
-            log.error("Отзыв с id = {} не найден", reviewId);
+            log.error("Review with id = {} is not found", reviewId);
         }
     }
 
