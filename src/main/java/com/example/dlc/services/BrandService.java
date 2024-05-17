@@ -2,7 +2,6 @@ package com.example.dlc.services;
 
 import com.example.dlc.models.Brand;
 import com.example.dlc.repositories.BrandRepository;
-import com.example.dlc.repositories.ManufacturerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +12,10 @@ import java.util.List;
 @Service
 public class BrandService {
     private final BrandRepository brandRepository;
-    private final ManufacturerRepository manufacturerRepository;
 
     @Autowired
-    public BrandService(BrandRepository brandRepository, ManufacturerRepository manufacturerRepository) {
+    public BrandService(BrandRepository brandRepository) {
         this.brandRepository = brandRepository;
-        this.manufacturerRepository = manufacturerRepository;
     }
 
     public Brand addBrand(Brand brand) {
@@ -31,21 +28,14 @@ public class BrandService {
 
     @Transactional
     public void deleteBrand(Long brandId) {
-    Brand brand = brandRepository.findById(brandId).orElseThrow(() -> new EntityNotFoundException("Марка не найдена с id: " + brandId));
+        Brand brand = brandRepository.findById(brandId)
+                .orElseThrow(() -> new EntityNotFoundException("Марка не найдена с id: " + brandId));
 
-    // Удаление всех товаров, связанных с производителем
-    brand.getProducts().forEach(product -> product.setBrand(null));
-    brand.getProducts().clear();
+        // Удаление всех товаров, связанных с производителем
+        brand.getProducts().forEach(product -> product.setBrand(null));
+        brand.getProducts().clear();
 
-    // Проверка существования производителя
-    if (brand.getManufacturer() != null) {
-        Manufacturer manufacturer = brand.getManufacturer();
         // Удаление производителя
-        manufacturerRepository.delete(manufacturer);
-    } else {
-        // Бренд не связан с производителем, можно удалить его напрямую
         brandRepository.delete(brand);
     }
-}
-
 }
