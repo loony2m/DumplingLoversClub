@@ -2,6 +2,7 @@ package com.example.dlc.services;
 
 import com.example.dlc.models.Brand;
 import com.example.dlc.repositories.BrandRepository;
+import com.example.dlc.repositories.ManufacturerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +13,12 @@ import java.util.List;
 @Service
 public class BrandService {
     private final BrandRepository brandRepository;
+    private final ManufacturerRepository manufacturerRepository;
 
     @Autowired
     public BrandService(BrandRepository brandRepository) {
         this.brandRepository = brandRepository;
+        this.manufacturerRepository = manufacturerRepository;
     }
 
     public Brand addBrand(Brand brand) {
