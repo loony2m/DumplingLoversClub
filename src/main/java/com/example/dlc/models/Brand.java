@@ -23,12 +23,10 @@ public class Brand {
     @Setter
     @Getter
     @Transient
-    private List<Manufacturer> banufacturers;
+    private List<Manufacturer> manufacturers;
 
     @Setter
     @Getter
     @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products;
 }
-
-
