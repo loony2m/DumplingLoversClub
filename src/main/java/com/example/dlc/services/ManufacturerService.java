@@ -27,14 +27,16 @@ public class ManufacturerService {
 
     @Transactional
     public void deleteManufacturer(Long manufacturerId) {
-        Manufacturer manufacturer = manufacturerRepository.findById(manufacturerId)
-                .orElseThrow(() -> new EntityNotFoundException("Производитель не найден с id: " + manufacturerId));
+    Manufacturer manufacturer = manufacturerRepository.findById(manufacturerId).orElseThrow(() -> new EntityNotFoundException("Производитель не найден с id: " + manufacturerId));
 
-        // Удаление всех товаров, связанных с производителем
-        manufacturer.getProducts().forEach(product -> product.setManufacturer(null));
-        manufacturer.getProducts().clear();
+    // Удаление всех товаров, связанных с производителем
+    manufacturer.getProducts().forEach(product -> product.setManufacturer(null));
+    manufacturer.getProducts().clear();
 
-        // Удаление производителя
+    if (manufacturer.getBrands() != null && !manufacturer.getBrands().isEmpty()) {
+        manufacturer.getBrands().forEach(brand -> brandRepository.delete(brand));
+    } else {
         manufacturerRepository.delete(manufacturer);
     }
+}
 }
