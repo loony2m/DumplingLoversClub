@@ -22,11 +22,6 @@ public class Manufacturer {
 
     @Setter
     @Getter
-    @Transient
-    private List<Brand> brands;
-
-    @Setter
-    @Getter
     @OneToMany(mappedBy = "manufacturer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products;
 }
