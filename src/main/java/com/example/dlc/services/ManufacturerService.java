@@ -15,7 +15,7 @@ public class ManufacturerService {
     private final ManufacturerRepository manufacturerRepository;
     private final BrandRepository brandRepository;
 
-    public ManufacturerService(ManufacturerRepository manufacturerRepository) {
+    public ManufacturerService(ManufacturerRepository manufacturerRepository, BrandRepository brandRepository) {
         this.manufacturerRepository = manufacturerRepository;
         this.brandRepository = brandRepository;
     }
