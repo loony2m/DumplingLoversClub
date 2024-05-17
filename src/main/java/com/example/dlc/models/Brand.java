@@ -2,6 +2,7 @@ package com.example.dlc.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Transient;
 
 import javax.persistence.*;
 import java.util.List;
@@ -19,6 +20,11 @@ public class Brand {
     @Setter
     @Getter
     private double averageRating;
+
+    @Setter
+    @Getter
+    @Transient
+    private List<Manufacturer> banufacturers;
 
     @Setter
     @Getter
