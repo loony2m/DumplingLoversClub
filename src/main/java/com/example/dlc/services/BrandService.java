@@ -16,7 +16,7 @@ public class BrandService {
     private final ManufacturerRepository manufacturerRepository;
 
     @Autowired
-    public BrandService(BrandRepository brandRepository) {
+    public BrandService(BrandRepository brandRepository, ManufacturerRepository manufacturerRepository) {
         this.brandRepository = brandRepository;
         this.manufacturerRepository = manufacturerRepository;
     }
