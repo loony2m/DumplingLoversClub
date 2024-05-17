@@ -28,14 +28,21 @@ public class BrandService {
 
     @Transactional
     public void deleteBrand(Long brandId) {
-        Brand brand = brandRepository.findById(brandId)
-                .orElseThrow(() -> new EntityNotFoundException("Марка не найдена с id: " + brandId));
+    Brand brand = brandRepository.findById(brandId).orElseThrow(() -> new EntityNotFoundException("Марка не найдена с id: " + brandId));
 
-        // Удаление всех товаров, связанных с производителем
-        brand.getProducts().forEach(product -> product.setBrand(null));
-        brand.getProducts().clear();
+    // Удаление всех товаров, связанных с производителем
+    brand.getProducts().forEach(product -> product.setBrand(null));
+    brand.getProducts().clear();
 
+    // Проверка существования производителя
+    if (brand.getManufacturer() != null) {
+        Manufacturer manufacturer = brand.getManufacturer();
         // Удаление производителя
+        manufacturerRepository.delete(manufacturer);
+    } else {
+        // Бренд не связан с производителем, можно удалить его напрямую
         brandRepository.delete(brand);
     }
+}
+
 }
