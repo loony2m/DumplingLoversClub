@@ -45,8 +45,12 @@
     <h2>Список производителей</h2>
     <ul class="list-group mb-5">
         <#list manufacturers as manufacturer>
-            <li class="list-group-item">${manufacturer.name} <a class="btn btn-danger ml-5" href="/admin/delete-manufacturer/${manufacturer.id}" onclick="event.preventDefault(); document.getElementById('delete-form-${manufacturer.id}').submit();">Удалить</a>
-                <form id="delete-form-${manufacturer.id}" action="/admin/delete-manufacturer/${manufacturer.id}" method="post" style="display: none;">
+            <li class="list-group-item">${manufacturer.name}
+                <a class="btn btn-danger ml-5" href="/admin/delete-manufacturer/${manufacturer.id}"
+                   onclick="event.preventDefault(); document.getElementById('delete-manufacturer-form-${manufacturer.id}').submit();">
+                    Удалить
+                </a>
+                <form id="delete-manufacturer-form-${manufacturer.id}" action="/admin/delete-manufacturer/${manufacturer.id}" method="post" style="display: none;">
                     <input type="hidden" name="_csrf" value="${_csrf.token}">
                 </form>
             </li>
@@ -56,8 +60,12 @@
     <h2>Список брендов</h2>
     <ul class="list-group">
         <#list brands as brand>
-            <li class="list-group-item">${brand.name} <a class="btn btn-danger ml-5" href="/admin/delete-brand/${brand.id}" onclick="event.preventDefault(); document.getElementById('delete-form-${brand.id}').submit();">Удалить</a>
-                <form id="delete-form-${brand.id}" action="/admin/delete-brand/${brand.id}" method="post" style="display: none;">
+            <li class="list-group-item">${brand.name}
+                <a class="btn btn-danger ml-5" href="/admin/delete-brand/${brand.id}"
+                   onclick="event.preventDefault(); document.getElementById('delete-brand-form-${brand.id}').submit();">
+                    Удалить
+                </a>
+                <form id="delete-brand-form-${brand.id}" action="/admin/delete-brand/${brand.id}" method="post" style="display: none;">
                     <input type="hidden" name="_csrf" value="${_csrf.token}">
                 </form>
             </li>
